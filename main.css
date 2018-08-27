@@ -6,3 +6,12 @@ body {
 h1 {
     color: white;
 }
+
+header {
+    padding: 30px 20px;
+}
+
+#game {
+    background-color: lightgray;
+    padding: 200px 40px;
+}
