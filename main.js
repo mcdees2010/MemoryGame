@@ -7,24 +7,32 @@ const gameArea = document.querySelector("#game");
 const cards = document.querySelectorAll('.card');
 const btn = document.getElementById("start-game");
 const suits = ["c", "d", "h", "s"];
-const numbers = ["02", "03", "04", "05", "06", "07", "08", "09", "10", "J", "Q", "K", "A"];
+const numbers = ["J", "Q", "K", "A"];
 const deck = [];
 
 suits.forEach(function(suit){
     numbers.forEach(function(number){
         deck.push(suit + number);
     })
-}) 
+})
 
-shuffleCards();
-const memoryCards = deck.slice(0,12);
+const suffledDeck = shuffleCards(deck);
+const memoryCards = shuffleCards([...suffledDeck.slice(0,3), ...suffledDeck.slice(0,3), ...suffledDeck.slice(3,9)]);
+
 
 
 /*
  * EVENT HANDLERS
  */
 
- gameArea.addEventListener("click", toggleCard);
+ let lastClick;
+
+ gameArea.addEventListener("click", showCard);
+
+ 
+
+
+
 
  btn.addEventListener('click', function(){
      var i = 60;
@@ -46,32 +54,30 @@ const memoryCards = deck.slice(0,12);
 console.log(deck);
 
 
-function shuffleCards() {
+function shuffleCards(deck) {
     for (let i = deck.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i+1));
         var temp = deck[i];
         deck[i] = deck[j]
         deck[j] = temp;
     }
+    return deck;
 }
 
-function toggleCard(evt) {
+function showCard(evt) {
     let id = parseInt(evt.target.id.split("-")[1]);    
     evt.target.classList.remove('back');
     evt.target.classList.add(memoryCards[id]);
 };
 
-// var second = 0;
-// var timer = document.querySelector(".timer");
-// var interval;
-    
-// function startTimer(){
-//     interval = setInterval(function(){
-//         timer.innerHTML = +second+ "secs";
-//         if(second == 60){
-//             second--;
-//         }
-//     },1000);
-// }
-
-
+function hideCard(evt) {
+    let id = parseInt(evt.target.id.split("-")[1]);    
+    evt.target.classList.remove(memoryCards[id]);
+    evt.target.classList.add('back');
+};
+// var checkMatches = function (){
+//     if(deck[0] === deck[1]){
+//     alert("You found a match!");
+// 	} else {
+// 	alert("Sorry, try again.");
+// 	}

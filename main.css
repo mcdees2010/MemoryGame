@@ -26,12 +26,40 @@ header {
     border: 5px solid white;
     margin: auto;
     padding: 10px 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
     box-sizing: border-box;
+    transition: all .8s linear;
+    transform-style: preserve-3d;
+    position: relative;
 }
 
 #timer {
     position: absolute;
-    right: 410px
+    right: 410px;
+    font-size: 18px; 
+}
+
+.astext1 {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    padding-top: 20px;
+}
+
+.astext2 {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+    color: white;
+    padding-left: 20px;
+    font-size: 20px;
 }
 
 /* .card {
