@@ -5,6 +5,14 @@ body {
 
 h1 {
     color: white;
+    font-family: 'Indie Flower', cursive;
+    font-size: 45px;
+}
+
+nav {
+    color: white;
+    font-family: 'Indie Flower', cursive;
+    text-align: center;
 }
 
 header {
@@ -13,6 +21,28 @@ header {
 
 #game {
     background-color: lightgray;
-    
+    width: 40%;
+    height: 50%;
+    border: 5px solid white;
+    margin: auto;
+    padding: 10px 0;
+    box-sizing: border-box;
 }
 
+#timer {
+    position: absolute;
+    right: 410px
+}
+
+/* .card {
+    
+}
+ */
+
+ #start-game {
+    font-family: 'Indie Flower', cursive;
+ }
+
+ #play-again {
+    font-family: 'Indie Flower', cursive;
+ }

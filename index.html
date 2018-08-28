@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="card-deck-css/css/cardstarter.min.css">
     <script defer src="main.js"></script>
@@ -11,8 +12,11 @@
 </head>
 <body>
     <header>
-        <h1>MEMORY GAME</h1>
-        <nav></nav>
+        <h1>Memory Game</h1>
+        <nav>
+            <!-- <span id="score">0 points</span> -->
+            <span id="timer">Ready</span>
+        </nav>
     </header>
     <div id="game">
         <div class="card back" id="cell-0"></div>
@@ -28,7 +32,7 @@
         <div class="card back" id="cell-10"></div>
         <div class="card back" id="cell-11"></div>
     </div>
-    <!-- <button id="start-game" onclick="startGame()">Start</a>
-    <button id="play-again" onclick="playAgain()">Play again </a> -->
+    <button id="start-game" onclick="startGame()">Start</a>
+    <button id="play-again" onclick="playAgain()">Play again </a>
 </body>
 </html>
