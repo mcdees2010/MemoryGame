@@ -6,9 +6,12 @@ console.log("linked!");
 const gameArea = document.querySelector("#game");
 const cards = document.querySelectorAll('.card');
 const btn = document.getElementById("start-game");
+const score = document.getElementById("score");
 const suits = ["c", "d", "h", "s"];
 const numbers = ["J", "Q", "K", "A"];
 const deck = [];
+let currentPair = [];
+let points = 0;
 
 suits.forEach(function(suit){
     numbers.forEach(function(number){
@@ -26,13 +29,9 @@ const memoryCards = shuffleCards([...suffledDeck.slice(0,3), ...suffledDeck.slic
  */
 
  let lastClick;
+ let currentClick;
 
  gameArea.addEventListener("click", showCard);
-
- 
-
-
-
 
  btn.addEventListener('click', function(){
      var i = 60;
@@ -53,6 +52,23 @@ const memoryCards = shuffleCards([...suffledDeck.slice(0,3), ...suffledDeck.slic
 
 console.log(deck);
 
+function hideCard(card, className) {
+    card.classList.remove(className);
+    card.classList.add('back')
+};
+
+function checkMatch() {
+    let cardOnevalue = currentPair[0].classList[1]
+    let cardTwovalue = currentPair[1].classList[1]
+    if (cardOnevalue === cardTwovalue) {
+        points++;
+        currentPair = [];
+    } else {
+        hideCard(currentPair[0], cardOnevalue);
+        hideCard(currentPair[1], cardTwovalue);
+        currentPair = [];
+    }
+}
 
 function shuffleCards(deck) {
     for (let i = deck.length - 1; i > 0; i--) {
@@ -68,13 +84,10 @@ function showCard(evt) {
     let id = parseInt(evt.target.id.split("-")[1]);    
     evt.target.classList.remove('back');
     evt.target.classList.add(memoryCards[id]);
+    currentPair.push(evt.target);
+    setTimeout(checkMatch, 2000)
 };
 
-function hideCard(evt) {
-    let id = parseInt(evt.target.id.split("-")[1]);    
-    evt.target.classList.remove(memoryCards[id]);
-    evt.target.classList.add('back');
-};
 // var checkMatches = function (){
 //     if(deck[0] === deck[1]){
 //     alert("You found a match!");
