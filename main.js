@@ -14,10 +14,7 @@ const score = document.getElementById("score");
 const suits = ["c", "d", "h", "s"];
 const numbers = ["J", "Q", "K", "A"];
 const deck = [];
-const setIntervalQueue = [];
 const matches = [];
-let lastCard; 
-let thisCard = null;
 let currentPair = [];
 let points = 0;
 
@@ -35,7 +32,7 @@ const memoryCards = shuffleCards(state);
  * EVENT HANDLERS
  */
 
- gameArea.addEventListener("click", showCard, true);
+ gameArea.addEventListener("click", showCard);
  
 
  btn.addEventListener('click', function(){
@@ -55,56 +52,85 @@ const memoryCards = shuffleCards(state);
  * RENDER
  */
 
-function hideCard(card, className) {
-    card.classList.remove(className);
-    card.classList.add('back')
+function hideCards(cards) {
+    setTimeout(function() {
+        cards.forEach(function(card) {
+            let className = card.classList[1];
+            let id = parseInt(card.getAttribute('key'));
+            memoryCards[id].clicked = false;
+            card.classList.remove(className);
+            card.classList.add('back')
+        })
+    }, 1000);
 };
 
 function showCard(evt) {
 
     if (currentPair.length > 1) return;
 
-    let id = parseInt(evt.target.id.split("-")[1]); 
-    
+    // let id = parseInt(evt.target.id.split("-")[1]); 
+    let id = parseInt(evt.target.getAttribute('key'));    
     console.log(id);
     console.log(matches);
     if (memoryCards[id].clicked || matches.includes(id)) return;
 
     // Mark the card as clicked
     memoryCards[id].clicked = true;
-
-    let currentTimeout = window.setTimeout(checkMatch, 3000);
     
     // Pushing event into event queue
     currentPair.push(evt.target);
-    setIntervalQueue.push(currentTimeout);
     
     // Show card
     evt.target.classList.remove('back');
-    evt.target.classList.add(memoryCards[id].value);
 
-    if (thisCard) {
-        lastCard = thisCard;
-    }
-    thisCard = evt.target.classList[1];
+    // Match Card with Memory Card List.
+    evt.target.classList.add(memoryCards[id].value);
+    checkMatch();
+    checkWin();
 };
 
-function checkMatch() {
-
-    let currentCard = currentPair.shift();
-    let id = parseInt(currentCard.id.split("-")[1]);
-    memoryCards[id].clicked = false;
-
-    if (thisCard === lastCard) {
-        matches.push(thisCard);
-        return;
-        console.log('Winner');
+function checkWin(){
+    if(matches.length === 6){
+        alert("You won the game!"); 
     }
-    hideCard(currentCard, currentCard.classList[1]);
-    if (matches.length >= 6){
-        gameArea.removeEventListener("click", showCard, true);
 }
+
+function checkMatch() {
+    // Check if current pair is greater than 2.
+    if (currentPair.length < 2) return;
+    
+    let card1 = currentPair[0].classList[1];
+    let card2 = currentPair[1].classList[1];
+    if (card1 === card2) {
+        points++;
+        matches.push(card1);
+        matches.push(card2);
+    } else {
+        hideCards(currentPair);
+    }
+
+    currentPair = [];
 }
+
+function resetGame(){
+
+}
+
+// function checkMatch() {
+//     let currentCard = currentPair.shift();
+//     let id = parseInt(currentCard.id.split("-")[1]);
+//     memoryCards[id].clicked = false;
+//     if (thisCard === lastCard) {
+//         matches.push(thisCard);
+//         return;
+//         console.log('Winner');
+//     }
+//     hideCard(currentCard, currentCard.classList[1]);
+//     if (matches.length === 6){
+//         alert('WON GAME')
+//         gameArea.removeEventListener("click", showCard);
+//     }
+// }
 
 function shuffleCards(deck) {
     for (let i = deck.length - 1; i > 0; i--) {
