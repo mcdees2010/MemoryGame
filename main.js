@@ -51,7 +51,7 @@ function setMessage(message) {
     btn.disabled = true;
     gameArea.addEventListener("click", showCard);
     setMessage("Good Luck!");
-     var i = 5;
+     var i = 60;
      intervalId = setInterval(function(){
      var timer =  document.getElementById("timer").innerHTML = i + " " + "secs remaining";
         if (i === 0){
