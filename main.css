@@ -63,11 +63,6 @@ header {
     font-size: 20px;
 }
 
-/* .card {
-    
-}
- */
-
  #start-game {
     font-family: 'Indie Flower', cursive;
  }
@@ -79,7 +74,7 @@ header {
  #GameResult {
      position: absolute;
      left: 400px;
-     font-size: 24px;
+     font-size: 20px;
      color: lightcoral;
      font-weight: bold;
  }
