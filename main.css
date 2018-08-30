@@ -32,6 +32,7 @@ header {
     transition: all .8s linear;
     transform-style: preserve-3d;
     position: relative;
+    box-shadow: 5px 10px gray;
 }
 
 #timer {
