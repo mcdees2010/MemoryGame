@@ -35,7 +35,8 @@ const memoryCards = shuffleCards(state);
  * EVENT HANDLERS
  */
 
- gameArea.addEventListener("click", showCard);
+ gameArea.addEventListener("click", showCard, true);
+ 
 
  btn.addEventListener('click', function(){
      var i = 60;
@@ -99,9 +100,10 @@ function checkMatch() {
         return;
         console.log('Winner');
     }
-
     hideCard(currentCard, currentCard.classList[1]);
-    
+    if (matches.length >= 6){
+        gameArea.removeEventListener("click", showCard, true);
+}
 }
 
 function shuffleCards(deck) {
@@ -113,3 +115,45 @@ function shuffleCards(deck) {
     }
     return deck;
 }
+
+
+
+
+
+
+// function endGame(){
+//     if(currentPair === 3){
+//        alert("You won the game!")
+//     }else {
+//        alert("Game Over!, try again.")
+//        clearInterval();
+// }
+// } need to add it within the time limit of the countdown!
+//   if timer = 0 && currentPair === 3
+
+// function endGame(){
+//     if there are 3 matches then game is over! 
+// no more contiunuing to play
+//   if(matches > 3){
+//    endGame 
+//    reset board with reset button
+// alert/pop up that the game has been won
+
+    // let lastElem = currentPair[currentPair.length-1];
+
+    // if (currentCard === lastElem) {
+    //     points++;
+    // }
+    // if (currentPair.length === 2) {
+    //     let cardOnevalue = currentPair[0].classList[1]
+    //     let cardTwovalue = currentPair[1].classList[1]
+    //     if (cardOnevalue === cardTwovalue) {
+    //         points++;
+    //         currentPair = [];
+    //         alert("you got a pair!");
+    //     } else {
+    //         hideCard(currentPair[0], cardOnevalue);
+    //         hideCard(currentPair[1], cardTwovalue);
+    //         currentPair = [];
+    //     }
+    // }
