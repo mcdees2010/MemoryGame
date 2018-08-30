@@ -13,31 +13,42 @@ const score = document.getElementById("score");
 
 const suits = ["c", "d", "h", "s"];
 const numbers = ["J", "Q", "K", "A"];
-const deck = [];
 const matches = [];
 let currentPair = [];
+let intervalId, memoryCards, deck;
 let points = 0;
 
-suits.forEach(function(suit){
-    numbers.forEach(function(number){
-        deck.push(suit + number);
-    })
-})
 
-const suffledDeck = shuffleCards(deck);
-const state = [...suffledDeck.slice(0,3), ...suffledDeck.slice(0,3), ...suffledDeck.slice(3,9)].map(card => ({ clicked: false, value: card }) )
-const memoryCards = shuffleCards(state);
+function createDeck() {
+    suits.forEach(function(suit){
+        numbers.forEach(function(number){
+            deck.push(suit + number);
+        })
+    })
+}
+
+function createCards() {
+    deck = [];
+    createDeck()
+    const suffledDeck = shuffleCards(deck);
+    const state = [...suffledDeck.slice(0,3), ...suffledDeck.slice(0,3), ...suffledDeck.slice(3,9)].map(card => ({ clicked: false, value: card }) )
+    memoryCards = shuffleCards(state);
+}
+
+createCards();
+
+
+
 
 /*
  * EVENT HANDLERS
  */
-
- gameArea.addEventListener("click", showCard);
  
 
  btn.addEventListener('click', function(){
+    gameArea.addEventListener("click", showCard);
      var i = 60;
-     var intervalId = setInterval(function(){
+     intervalId = setInterval(function(){
      var timer =  document.getElementById("timer").innerHTML = i + " " + "secs remaining";
         if (i === 0){
             clearInterval(intervalId);
@@ -45,8 +56,11 @@ const memoryCards = shuffleCards(state);
             i--;
         }
         btn.disabled = true;
+    
     }, 1000);
  })
+
+
 
 /*
  * RENDER
@@ -67,8 +81,6 @@ function hideCards(cards) {
 function showCard(evt) {
 
     if (currentPair.length > 1) return;
-
-    // let id = parseInt(evt.target.id.split("-")[1]); 
     let id = parseInt(evt.target.getAttribute('key'));    
     console.log(id);
     console.log(matches);
@@ -90,8 +102,9 @@ function showCard(evt) {
 };
 
 function checkWin(){
-    if(matches.length === 6){
+    if (matches.length === 6){
         alert("You won the game!"); 
+        resetGame();
     }
 }
 
@@ -113,24 +126,15 @@ function checkMatch() {
 }
 
 function resetGame(){
-
+    btn.disabled = false;
+    clearInterval(intervalId);
+    gameArea.removeEventListener("click", showCard);
+    hideCards(matches);
+    matches = [];
+    createCards();
+    //reshuffle cards
+    // reset the state
 }
-
-// function checkMatch() {
-//     let currentCard = currentPair.shift();
-//     let id = parseInt(currentCard.id.split("-")[1]);
-//     memoryCards[id].clicked = false;
-//     if (thisCard === lastCard) {
-//         matches.push(thisCard);
-//         return;
-//         console.log('Winner');
-//     }
-//     hideCard(currentCard, currentCard.classList[1]);
-//     if (matches.length === 6){
-//         alert('WON GAME')
-//         gameArea.removeEventListener("click", showCard);
-//     }
-// }
 
 function shuffleCards(deck) {
     for (let i = deck.length - 1; i > 0; i--) {
@@ -144,6 +148,24 @@ function shuffleCards(deck) {
 
 
 
+
+//reset game variables on win/lose
+
+// function checkMatch() {
+//     let currentCard = currentPair.shift();
+//     let id = parseInt(currentCard.id.split("-")[1]);
+//     memoryCards[id].clicked = false;
+//     if (thisCard === lastCard) {
+//         matches.push(thisCard);
+//         return;
+//         console.log('Winner');
+//     }
+//     hideCard(currentCard, currentCard.classList[1]);
+//     if (matches.length === 6){
+//         alert('WON GAME')
+
+//     }
+// }
 
 
 
