@@ -13,7 +13,7 @@ const score = document.getElementById("score");
 
 const suits = ["c", "d", "h", "s"];
 const numbers = ["J", "Q", "K", "A"];
-const matches = [];
+let matches = [];
 let currentPair = [];
 let intervalId, memoryCards, deck;
 let points = 0;
@@ -33,12 +33,14 @@ function createCards() {
     const suffledDeck = shuffleCards(deck);
     const state = [...suffledDeck.slice(0,3), ...suffledDeck.slice(0,3), ...suffledDeck.slice(3,9)].map(card => ({ clicked: false, value: card }) )
     memoryCards = shuffleCards(state);
+    memoryCards.forEach(card => card.clicked = false);
 }
 
 createCards();
 
-
-
+function setMessage(message) {
+    document.getElementById("GameResult").innerHTML = message;
+}
 
 /*
  * EVENT HANDLERS
@@ -46,21 +48,20 @@ createCards();
  
 
  btn.addEventListener('click', function(){
+    btn.disabled = true;
     gameArea.addEventListener("click", showCard);
-     var i = 60;
+    setMessage("Good Luck!");
+     var i = 5;
      intervalId = setInterval(function(){
      var timer =  document.getElementById("timer").innerHTML = i + " " + "secs remaining";
         if (i === 0){
             clearInterval(intervalId);
+            loseGame();
         }else {
             i--;
         }
-        btn.disabled = true;
-    
     }, 1000);
  })
-
-
 
 /*
  * RENDER
@@ -103,9 +104,14 @@ function showCard(evt) {
 
 function checkWin(){
     if (matches.length === 6){
-        alert("You won the game!"); 
+        setMessage("You won the game!")
         resetGame();
     }
+}
+
+function loseGame() {
+    setMessage("LOSER! Try again!");
+    resetGame();
 }
 
 function checkMatch() {
@@ -116,8 +122,8 @@ function checkMatch() {
     let card2 = currentPair[1].classList[1];
     if (card1 === card2) {
         points++;
-        matches.push(card1);
-        matches.push(card2);
+        matches.push(currentPair[0]);
+        matches.push(currentPair[1]);
     } else {
         hideCards(currentPair);
     }
@@ -132,6 +138,9 @@ function resetGame(){
     hideCards(matches);
     matches = [];
     createCards();
+    // setTimeout(function() {
+    //     setMessage("Ready to Play!");
+    // }, 3000);
     //reshuffle cards
     // reset the state
 }
