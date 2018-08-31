@@ -8,12 +8,18 @@ Your task is to match three sets of cards. the rest of the cards are random, and
 
 <img src="https://i.imgur.com/o1yxHei.png">
 
-<img src="https://imgur.com/T9l5Izy.png">
+<img src="https://i.imgur.com/R8JuA8s.png">
 
 ### Technologies Used
 
-1) HTML<br>
+-  HTML<br>
 
-2) CSS<br>
+- CSS<br>
 
-3) Javascript
+- Javascript
+
+### ISSUES / NEXT STEPS
+
+- adding a scoring system
+- adding a second level
+
